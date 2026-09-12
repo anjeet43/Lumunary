@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: luminary
+      POSTGRES_USER: luminary
+      POSTGRES_PASSWORD: luminary
+    ports: ["5432:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+  backend:
+    build: ./backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    working_dir: /app
+    volumes: ["./backend:/app"]
+    ports: ["8000:8000"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://luminary:luminary@db:5432/luminary
+      DEMO_MODE: "true"
+    depends_on: [db]
+volumes:
+  postgres_data:
