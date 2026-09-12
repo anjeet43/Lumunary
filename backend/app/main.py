@@ -10,7 +10,20 @@ from app.services.providers import catalog_provider, speech_provider, vision_pro
 from app.services.store import store
 
 app=FastAPI(title="Luminary API", version="0.1.0", description="Demo-safe virtual business manager APIs for artisans.")
-app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000","http://localhost:8080"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+bearer = HTTPBearer(auto_error=False)
+
+
+
 bearer=HTTPBearer(auto_error=False)
 def token_for(user_id):
     body=base64.urlsafe_b64encode(json.dumps({"sub":user_id,"exp":int((datetime.now(timezone.utc)+timedelta(days=7)).timestamp())}).encode()).decode().rstrip("=")

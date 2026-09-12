@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app/theme.dart';
-import 'features/home_shell.dart';
+import 'features/login.dart';
 
 void main() => runApp(const LuminaryApp());
 
@@ -11,6 +11,6 @@ class LuminaryApp extends StatelessWidget {
         title: 'Luminary',
         debugShowCheckedModeBanner: false,
         theme: LuminaryTheme.light,
-        home: const HomeShell(),
+        home: const LoginPage(),
       );
 }
